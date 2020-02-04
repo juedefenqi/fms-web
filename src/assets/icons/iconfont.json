@@ -1,0 +1,16 @@
+{
+  "id": "1572673",
+  "name": "fms-web",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8356588",
+      "name": "plus",
+      "font_class": "plus",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    }
+  ]
+}
