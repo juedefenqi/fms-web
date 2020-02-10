@@ -18,7 +18,7 @@ import {
   };
   export const accLogChange = params => {
     //操作记录变更记录
-    return getRequest("/fcOperationLog/changeLog", params);
+    return getRequest("/fcBankAccountHis/queryHisListByAccid", params);
   };
   export const accLogDefer = params => {
     //操作记录展期记录

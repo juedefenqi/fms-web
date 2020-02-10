@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Table border :columns="columns" :data="data" ref="table" sortable="custom" @on-selection-change="selectionChange" v-if="formValidate.isOpenCipherware"></Table>
+    <Table border :columns="columns" :data="formValidate.cipherwareList" ref="table" sortable="custom" @on-selection-change="selectionChange" v-if="formValidate.isOpenCipherware"></Table>
     <Modal :title="modalTitle" v-model="modal" :mask-closable="false" :width="650">
       <Form ref="form" :model="form" :label-width="100" :rules="formValidate1" class="modal-form">
         <FormItem label="编号:" prop="cipherwareId" style="margin-top: 24px;">
@@ -256,7 +256,8 @@ export default {
         ],
         getPerson: [{ required: true, message: "不能为空", trigger: "blur" }],
         idCard: [{ required: true, message: "不能为空", trigger: "blur" }]
-      }
+      },
+      getIndex: ''
     };
   },
   created() {
@@ -270,6 +271,8 @@ export default {
       }
     },
     data(val) {
+      console.log("$$$")
+      console.log(val)
       this.$emit("changelReturn", val);
     },
     modalOne(val){
@@ -277,6 +280,7 @@ export default {
         this.modal = true;
         this.isModify = true; //修改状态
         this.form=this.selectall;
+        this.getIndex = this.getArrIndex(this.formValidate.cipherwareList,this.selectall);
       }else{
         this.$Message.error("请选择一条信息进行操作!");
       }
@@ -284,6 +288,9 @@ export default {
     modalDetele(val){
       if(this.switch){
         //编辑内容
+        this.getIndex = this.getArrIndex(this.formValidate.cipherwareList,this.selectall);
+        this.formValidate.cipherwareList.splice(this.getIndex, 1);
+        this.switch = false;
       }else{
         this.$Message.error("请选择一条信息进行操作!");
       }
@@ -305,10 +312,12 @@ export default {
           }
           if (this.isModify) {
             //是否编辑态
-            this.data.splice(this.isKey, 1, data);
+            this.formValidate.cipherwareList.splice(this.getIndex, 1, data);
+            this.data.splice(this.getIndex, 1, data);
             this.isModify = false; //修改后重置编辑状态
             this.switch = false;
           } else {
+            this.formValidate.cipherwareList.push(data);
             this.data.push(data);
             this.switch = false;
           }
@@ -325,8 +334,20 @@ export default {
         this.selectall = "";
       }
     },
+    getArrIndex(arr, obj) {
+        let index = null;
+        let key = Object.keys(obj)[0];
+        arr.every(function(value, i) {
+            if (value[key] === obj[key]) {
+                index = i;
+                return false;
+            }
+            return true;
+        });
+        return index;
+    },
     init(){
-      this.data = this.formValidate.cipherwareList
+      //this.data = this.formValidate.cipherwareList
     },
   },
   mounted() {

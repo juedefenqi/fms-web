@@ -378,7 +378,7 @@ export default {
                     on: {
                       click: () => {
                         this.$router.push({
-                          name: "", //路由名
+                          name: "accountChange-information", //路由名
                           params: { id: id }
                         });
                       }

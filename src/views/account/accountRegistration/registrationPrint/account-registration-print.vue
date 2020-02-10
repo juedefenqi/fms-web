@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Table border :columns="columns" :data="data" ref="table" sortable="custom" @on-selection-change="selectionChange"></Table>
+    <Table border :columns="columns" :data="formValidate.fcBankSealorsignList" ref="table" sortable="custom" @on-selection-change="selectionChange"></Table>
     <Modal :title="modalTitle" v-model="modal" :mask-closable="false" :width="650">
       <Form ref="form" :model="form" :label-width="100" :rules="formValidate1" class="modal-form">
         <FormItem label="印鉴:" prop="sealType" style="margin-top: 24px;">
@@ -172,6 +172,7 @@ export default {
         authoPerson: [{ required: true, message: "不能为空", trigger: "blur" }],
         keeper: [{ required: true, message: "不能为空", trigger: "blur" }]
       },
+      getIndex: ''
     };
   },
   created() {
@@ -184,6 +185,7 @@ export default {
         this.modal = true;
         this.isModify = true; //修改状态
         this.form=this.selectall;
+        this.getIndex = this.getArrIndex(this.formValidate.fcBankSealorsignList,this.selectall);
       }else{
         this.$Message.error("请选择一条信息进行操作!");
       }
@@ -191,6 +193,9 @@ export default {
     modalDetele(val){
       if(this.switch){
         //编辑内容
+        this.getIndex = this.getArrIndex(this.formValidate.fcBankSealorsignList,this.selectall);
+        this.formValidate.fcBankSealorsignList.splice(this.getIndex, 1);
+        this.switch = false;
       }else{
         this.$Message.error("请选择一条信息进行操作!");
       }
@@ -208,7 +213,7 @@ export default {
   computed: {},
   methods: {
     init(){
-      this.data = this.formValidate.fcBankSealorsignList
+      //this.data = this.formValidate.fcBankSealorsignList
     },
     handleSubmit() {
       this.$refs.form.validate(valid => {
@@ -217,10 +222,12 @@ export default {
           this.modal = false;
           if (this.isModify) {
             //是否编辑态
-            this.data.splice(this.isKey, 1, data);
+            this.formValidate.fcBankSealorsignList.splice(this.getIndex, 1, data);
+            this.data.splice(this.getIndex, 1, data);
             this.isModify = false; //修改后重置编辑状态
             this.switch = false;
           } else {
+            this.formValidate.fcBankSealorsignList.push(data);
             this.data.push(data);
             this.switch = false;
           }
@@ -235,6 +242,18 @@ export default {
         this.switch = false; //不唯一失效
         this.selectall = "";
       }
+    },
+    getArrIndex(arr, obj) {
+      let index = null;
+      let key = Object.keys(obj)[0];
+      arr.every(function(value, i) {
+          if (value[key] === obj[key]) {
+              index = i;
+              return false;
+          }
+          return true;
+      });
+      return index;
     },
   },
 

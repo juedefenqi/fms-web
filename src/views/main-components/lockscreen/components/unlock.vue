@@ -55,7 +55,7 @@ export default {
       this.avatorLeft = "0px";
       this.inputLeft = "400px";
       this.password = "";
-      Cookies.set("locking", "0",{sameSite:'none' });
+      Cookies.set("locking", "0");
       this.$emit("on-unlock");
     },
     handleClickAvator() {

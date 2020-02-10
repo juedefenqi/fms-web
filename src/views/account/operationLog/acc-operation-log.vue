@@ -27,7 +27,7 @@
             <life-record v-if="tabName=='life'" :id="id"></life-record>
           </TabPane>
           <TabPane name="change" label="变更记录"> 
-          <!-- <change-record :id="id"></change-record> -->
+          <change-record v-if="tabName=='change'" :id="id"></change-record>
           </TabPane>
           <TabPane name="freeze" label="冻结解冻记录">
             <freeze-record v-if="tabName=='freeze'" :id="id"></freeze-record>

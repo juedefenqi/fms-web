@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Table border :columns="columns" :data="data" ref="table" sortable="custom" @on-selection-change="selectionChange" v-if="formValidate.isOpenEbank"></Table>
+    <Table border :columns="columns" :data="formValidate.bankUkeyList" ref="table" sortable="custom" @on-selection-change="selectionChange" v-if="formValidate.isOpenEbank"></Table>
     <!-- 网银证书添加弹框 -->
     <Modal :title="modalTitle" v-model="modal" :mask-closable="false" :width="1000">
       <Form ref="form" :model="form" :label-width="100" :rules="formValidate1" class="modal-form">
@@ -413,6 +413,7 @@ export default {
       },
       startDateOption: {},
       endDateOption: {},
+      getIndex: ''
     };
   },
   created() {
@@ -433,6 +434,7 @@ export default {
         this.modal = true;
         this.isModify = true; //修改状态
         this.form=this.selectall;
+        this.getIndex = this.getArrIndex(this.formValidate.bankUkeyList,this.selectall);
       }else{
         this.$Message.error("请选择一条信息进行操作!");
       }
@@ -440,6 +442,9 @@ export default {
     modalDetele(val){
       if(this.switch){
         //编辑内容
+        this.getIndex = this.getArrIndex(this.formValidate.bankUkeyList,this.selectall);
+        this.formValidate.bankUkeyList.splice(this.getIndex, 1);
+        this.switch = false;
       }else{
         this.$Message.error("请选择一条信息进行操作!");
       }
@@ -450,7 +455,6 @@ export default {
     init() {
       this.dicData("ukey_type", "certificateType"); // 获取网银证书类型
       this.dicData("ukey_role", "certificateRole"); // 获取网银证书角色
-      this.data = this.formValidate.bankUkeyList
     },
     dateFormat: dateDay,
     async dicData(item, key) {
@@ -470,16 +474,30 @@ export default {
           }
           if (this.isModify) {
             //是否编辑态
-            this.data.splice(this.isKey, 1, data);
+            this.formValidate.bankUkeyList.splice(this.getIndex, 1, data);
+            this.data.splice(this.getIndex, 1, data);
             this.isModify = false; //修改后重置编辑状态
             this.switch = false;
           } else {
+            this.formValidate.bankUkeyList.push(data);
             this.data.push(data);
             this.switch = false;
           }
           this.modal = false;
         }
       });
+    },
+    getArrIndex(arr, obj) {
+        let index = null;
+        let key = Object.keys(obj)[0];
+        arr.every(function(value, i) {
+            if (value[key] === obj[key]) {
+                index = i;
+                return false;
+            }
+            return true;
+        });
+        return index;
     },
     onstartDateChange(startDate) {
       this.endDateOption = {

@@ -77,15 +77,15 @@ return {
         },
         {
           title: "久悬登记人",
-          key: "unHangePerson",
+          key: "unHangPerson",
           align: "left"
         },
         {
           title: "久悬日期",
-          key: "hangeDate",
+          key: "hangDate",
           align: "left",
           render: (h, params) => {
-            let time =dateDay(params.row.hangeDate) ;
+            let time =dateDay(params.row.hangDate) ;
             return h(
               "div",
               {
@@ -106,15 +106,15 @@ return {
         },
           {
           title: "久悬原因",
-          key: "hangeRea",
+          key: "hangRea",
           align: "left"
         },
          {
           title: "解除久悬日期",
-          key: "unHangeDate",
+          key: "unHangDate",
           align: "left",
              render: (h, params) => {
-            let time =dateDay(params.row.unHangeDate) ;
+            let time =dateDay(params.row.unHangDate) ;
             return h(
               "div",
               {
@@ -135,7 +135,7 @@ return {
         },
         {
           title: "解除久悬原因",
-          key: "UnHangeRea",
+          key: "unHangRea",
           align: "left"
         }
       ],
@@ -169,6 +169,7 @@ methods: {
         false,
       );  
       this.data=item.records;
+          console.log(this.data)
       this.total=item.total;
       }
       },

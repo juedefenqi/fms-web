@@ -94,17 +94,23 @@ export const accountOpenCheck = {
     title:'开户申请查看',
     component: () => import("@/views/account/open-account-management/pages-details/account-open-check.vue")
 };
-const accountChange = {
+export const accountChange = {
     path: "account-change",
     name: "account-change",
     title: "变更申请",
     component: () => import("@/views/account/accountChange/account-change.vue")
   };
-const accountChangeInformation = {
+export const accountChangeInformation = {
     path: "account-change-information",
     name: "account-change-information",
-    title: "变更申请查看",
+    title: "变更申请查看旧",
     component: () => import("@/views/account/accountChange/account-change-information.vue")
+};
+export const ChangeInformation = {
+    path: "accountChange-information",
+    name: "accountChange-information",
+    title: "变更申请查看",
+    component: () => import("@/views/account/accountChange/accountChange-information.vue")
 };
 export const overhangCheck = {
     path: '/overhangCheck',
@@ -120,4 +126,4 @@ export const slot = {
 };
 export default [accountApplication,accountRegistration,accountRegistrationManagement,changeApplication,changeRegistration,
 freezeRegistration,thawRegistration,extensionApplication,extensionRegistration,suspensionRegistration,handleSuspensionApplication,relieveSuspensionRegistration,
-cancellationRegistration,cancellationApplication,accountOpenCheck,accountChange,accountChangeInformation,checkCancellationApplication,overhangCheck,slot]
+cancellationRegistration,cancellationApplication,accountOpenCheck,accountChange,accountChangeInformation,checkCancellationApplication,overhangCheck,slot,ChangeInformation]

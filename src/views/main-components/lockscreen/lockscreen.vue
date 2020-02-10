@@ -30,14 +30,14 @@ export default {
       lockScreenBack.style.boxShadow =
         "0 0 0 " + this.lockScreenSize + "px #667aa6 inset";
       this.showUnlock = true;
-      Cookies.set("last_page_name", this.$route.name,{sameSite:'none' }); // 本地存储锁屏之前打开的页面以便解锁后打开
+      Cookies.set("last_page_name", this.$route.name); // 本地存储锁屏之前打开的页面以便解锁后打开
       setTimeout(() => {
         lockScreenBack.style.transition = "all 0s";
         this.$router.push({
           name: "locking"
         });
       }, 800);
-      Cookies.set("locking", "1",{sameSite:'none' });
+      Cookies.set("locking", "1");
     }
   },
   mounted() {

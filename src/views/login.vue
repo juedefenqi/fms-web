@@ -274,9 +274,9 @@ export default {
                       // 保存7天
                       Cookies.set("userInfo", JSON.stringify(res.result), {
                         expires: 7
-                      },{sameSite:'none' });
+                      });
                     } else {
-                      Cookies.set("userInfo", JSON.stringify(res.result),{sameSite:'none' });
+                      Cookies.set("userInfo", JSON.stringify(res.result));
                     }
                     this.setStore("userInfo", res.result);
                     this.$store.commit("setAvatarPath", res.result.avatar);

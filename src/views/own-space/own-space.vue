@@ -483,7 +483,7 @@ export default {
         if (res.success) {
           this.$Message.success("保存成功");
           // 更新用户信息
-          Cookies.set("userInfo", this.userForm,{sameSite:'none' });
+          Cookies.set("userInfo", this.userForm);
           // 更新头像
           this.$store.commit("setAvatarPath", this.userForm.avatar);
         }
@@ -582,9 +582,9 @@ export default {
             // 保存7天
             Cookies.set("userInfo", JSON.stringify(res.result), {
               expires: 7
-            },{sameSite:'none' });
+            });
           } else {
-            Cookies.set("userInfo", JSON.stringify(res.result),{sameSite:'none' });
+            Cookies.set("userInfo", JSON.stringify(res.result));
           }
           this.setStore("userInfo", res.result);
         }
